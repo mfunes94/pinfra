@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <style>
+        body {
+            background-image: url('assets/Signin.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+         
+        }
+        
+        .card {
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Ajusta el valor de "0.8" para modificar la opacidad de la tarjeta */
+            padding-top: 0.5%; /* Reduce el espacio hacia arriba */
+            padding-bottom: 2%; /* Reduce el espacio hacia abajo */
+            padding-left: 1%;
+            padding-right: 1%;
+        }
+        
+        /* Estilos para ajustar PrimeFaces */
+        .field {
+            margin-bottom: 5%;
+        }
+        
+      
+        
+        .button-container {
+            margin-top: 7%; /* Añade espacio entre los botones */
+        }
+       
+    </style>
+</h:head>
+
+<body>
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="max-width: 500px;">
+            <header>
+                <div style="text-align: center;">
+                    <h1> Actualiza los datos de tu cuenta</h1>
+                </div>
+            </header>
+            <div style="max-width: 92%; margin: 0 auto; padding-left: 3%; padding-right: 3%;">
+                <div class="grid">
+                    <div class="col-5 flex align-items-center justify-content-center">
+                        <h:form class="ui-fluid">
+                            <div class="field">
+                                <p:outputLabel value="Nombre" for="nombre" />
+                                <p:inputText id="nombre" type="text" value ="#{modificarUsuarioController.personaDTO.nombre}"   />
+               					<p:message for="nombre" id="msgName" />
+                            </div>
+                         	<div class="field">
+                                <p:outputLabel value="Apellido" for="apellido" />
+                                <p:inputText id="apellido" type="text" value ="#{modificarUsuarioController.personaDTO.apellido}" />
+                                <p:message for="apellido" id="msgApellido"  />
+                            </div>
+                              <div class="field">
+                                <p:outputLabel value="Direccion" for="direccion" />
+                                <p:inputText id="direccion" type="text" value ="#{modificarUsuarioController.personaDTO.direccion}"  />
+                                <p:message for="direccion" id="msgDireccion"  />
+                            </div>
+                            <div class="field col-12 md:col-4">
+                				<p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento"/>
+                				<p:datePicker id="fechaNacimiento" value ="#{modificarUsuarioController.personaDTO.fechaNacimiento}"  monthNavigator="true" yearNavigator="true" showWeek="true" />
+                				<p:message for="fechaNacimiento" id="msgFecha" />
+            				</div>
+                            <p:commandButton class="ui-button-raised ui-button-info" type="submit" value="Enviar" action="#{modificarUsuarioController.modificarPersona}" 
+                            update="msgName msgApellido msgDireccion msgFecha"/>
+                            <div style="text-align: center; padding-top: 6%;">
+    							<a href="menu.jsf">Volver para atras</a>
+							</div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p:dialog id="dialogoUpdatePersona" header="Operación Exitosa" widgetVar="dialogoUpdatePersona" modal="true" dynamic="true" onHide="PF('dialogoUpdatePersona').hide(); window.location.href = 'tablaPersona.jsf';">
+    	<h:outputText value="Se ha realizado exitosamente la modificación" />
+	</p:dialog>
+	<p:dialog id="dialogoFallo" header="Error en la operación" widgetVar="dialogoFallo" modal="true" dynamic="true" >
+    	<h:outputText value="#{modificarUsuarioController.errorMessage}" />
+	</p:dialog>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <style>
+        body {
+            background-image: url('assets/listaEstudiantes.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+         
+        }
+        
+        .card {
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            margin-top: 4%;
+            margin-bottom: 4%;
+            padding-top: 0.5%; 
+            padding-bottom: 2%; 
+            padding-left: 1%;
+            padding-right: 1%;
+        }
+        
+        /* Estilos para ajustar PrimeFaces */
+        .field {
+            margin-bottom: 1%;
+        }
+        
+      
+        
+        .button-container {
+            margin-top: 7%; /* Añade espacio entre los botones */
+        }
+        .icon-button {
+		  background: none;
+		  border: none;
+		  padding: 0;
+		  font-size: 1rem;
+		  cursor: pointer;
+		  text-align: center;
+		}
+       
+    </style>
+    
+</h:head>
+
+<body>
+    <div style="height: 100vh; display: flex; justify-content: center;">
+        <div class="card" style="max-width: 92%;">
+         	<header style="display: flex; align-items: center;">
+	    		<div style="padding-left: 2.83%">
+	        		<p:commandButton styleClass="icon-button" onclick="window.location.href='menu.jsf';" icon="pi pi-arrow-left" />
+	    		</div>
+	    		<div style="flex: 1; text-align: center;">
+	        		<h1>Usuarios Inactivos</h1>
+	    		</div>
+		 	</header>
+            <div style=" margin: 0 auto; padding-left: 3%; padding-right: 3%;">
+             <h:form>
+    
+		        <p:dataTable var="usuario" value="#{tablaUsuariosInactivoController.usuarios}">
+		            <p:column headerText="Nombre">
+		                <h:outputText value="#{usuario.nombre}" />
+		            </p:column>
+		
+		            <p:column headerText="Apellido">
+		                <h:outputText value="#{usuario.apellido}"  />
+		            </p:column>
+		            <p:column headerText="Correo">
+		                <h:outputText value="#{usuario.correo}"  />
+		            </p:column>
+		            <p:column headerText="Correo">
+		                <h:outputText value="#{usuario.correo}"  />
+		            </p:column>
+		             <p:column >
+		                <p:commandButton  value="Activar" styleClass="rounded-button" action="#{tablaUsuariosInactivoController.activarUsuario(usuario)}"/>
+		            </p:column>
+		          
+		        </p:dataTable>
+   
+			</h:form>
+            </div>
+        </div>
+    </div>
+	   <p:dialog id="dialogoFallo" header="Error en la operación" widgetVar="dialogoFallo" modal="true" dynamic="true" >
+    	 <h:outputText value="#{tablaUsuariosInactivoController.errorMessage}" />
+	   </p:dialog>
+	   
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <style>
+        body {
+            background-image: url('assets/menu2.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+         
+        }
+        
+        .card {
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Ajusta el valor de "0.8" para modificar la opacidad de la tarjeta */
+            padding-top: 3%; /* Reduce el espacio hacia arriba */
+            padding-bottom: 3%; /* Reduce el espacio hacia abajo */
+            padding-left: 1%;
+            padding-right: 1%;
+        }
+        
+        /* Estilos para ajustar PrimeFaces */
+        .field {
+            margin-bottom: 7%;
+        }
+        
+      
+        
+        .button-container {
+            margin-top: 7%; /* Añade espacio entre los botones */
+        }
+        
+        .button-container2 {
+  			text-align: center;
+		}
+		.button-container2{
+  		display: flex;
+  		justify-content: space-between;
+  		margin-top: 2%;
+		}
+
+		.button-container p\\:commandButton {
+ 		flex-basis: 48%; 
+  		padding: 10px; 
+		}
+        
+    </style>
+</h:head>
+
+<body>
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="max-width: 500px;">
+            <header>
+                <div style="text-align: center;">
+                    <img src="assets/cetu1.png" alt="logo" style="width: 60%; height: auto;"></img>
+                    
+                </div>
+            </header>
+            <div style="max-width: 92%; margin: 0 auto; padding-left: 3%; padding-right: 3%;">
+                <h:form class="grid">
+				        <div class="col-5 flex align-items-center justify-content-center">
+				   			 <div class="ui-fluid button-container">
+				        		<p:commandButton type="submit" value="Listado de Personas" icon="pi pi-table" class="ui-button-raised ui-button-info"
+				                         onclick="window.location.href='tablaPersona.jsf';" />
+				    		</div>
+						</div>
+						<div class="col-5 flex align-items-center justify-content-center">
+				   			 <div class="ui-fluid button-container">
+				        		<p:commandButton type="submit" value="Activar Usuarios" icon="pi pi-check-square" class="ui-button-raised ui-button-info"
+				                         onclick="window.location.href='tablaUsuariosInactivos.jsf';" />
+				    		</div>
+						</div>
+						<div class="col-5 flex align-items-center justify-content-center">
+				    		<div class="ui-fluid button-container">
+				        		<p:commandButton type="submit" value="Listado de Estudiantes" icon="pi pi-table"
+				                         class="ui-button-raised ui-button-info"  onclick="window.location.href='tablaEstudiante.jsf';" />
+				    		</div>
+				    	
+						</div>
+						<div class="col-5 flex align-items-center justify-content-center">
+				    		<div class="ui-fluid button-container">
+				        		<p:commandButton type="submit" value="Actualizar Datos Cuenta" icon="pi pi-user-edit"
+				                         class="ui-button-raised ui-button-info"  action="#{modificarUsuarioController.irAModificarDatos}" />
+				    		</div>
+				    	
+						</div>
+						<div class="col-5 flex align-items-center justify-content-center">
+				    		<div class="ui-fluid button-container">
+				        		<p:commandButton type="submit" value="Darse de Baja" icon="pi pi-user-minus"
+				                         class="ui-button-raised ui-button-info"  action="#{bajaUsuarioController.abrirDialogBaja}" />
+				    		</div>
+				    	
+						</div>
+						
+						<div class="col-5 flex align-items-center justify-content-center">
+				    		<div class="ui-fluid button-container">
+				        		<p:commandButton type="submit" value="Cerrar Sesión" icon="pi pi-sign-out"
+				                         class="ui-button-raised ui-button-info" action="#{logoutController.abrirDialogLogout}"/>
+				    		</div>
+				    	
+						</div>
+
+                </h:form>
+            </div>
+        </div>
+    </div>
+      <p:dialog id="dialogoConfirmacion" header="Baja de Usuario" widgetVar="dialogoConfirmacion" modal="true" dynamic="true">
+    	<h:form>
+    		    <h:outputText value="¿Esta seguro que te queres dar de Baja? " />
+    		<div class="button-container2">
+			    <p:commandButton class="ui-button-raised ui-button-info cancel-button"  value="Cancelar" onclick="PF('dialogoConfirmacion').hide();"  />
+			    <p:commandButton class="ui-button-raised ui-button-info confirmar-button"  value="Confirmar" action="#{bajaUsuarioController.darBaja}"  />
+	  		</div>
+	  		
+	  	</h:form>
+	</p:dialog>
+    <p:dialog id="dialogoLogout" header="Cerrar la Sessión" widgetVar="dialogoLogout" modal="true" dynamic="true">
+     <h:form>
+		    <h:outputText value="¿Esta seguro que quieres cerrar la Sessión? " />
+		 <div class="button-container2">
+		    <p:commandButton class="ui-button-raised ui-button-info cancel-button"  value="Cancelar" onclick="PF('dialogoLogout').hide();" />
+		    <p:commandButton class="ui-button-raised ui-button-info confirmar-button"  value="Confirmar" action="#{logoutController.logout}"  />
+	 	 </div>
+	  </h:form>
+	</p:dialog>
+	<p:dialog id="dialogoFallo" header="Error en la operación" widgetVar="dialogoFallo" modal="true" dynamic="true" >
+    	<h:outputText value="#{bajaUsuarioController.errorMessage}" />
+	</p:dialog>
+	<p:dialog id="dialogoFalloLogout" header="Error en la operación" widgetVar="dialogoFalloLogout" modal="true" dynamic="true" >
+    	<h:outputText value="#{logoutController.errorMessage}" />
+	</p:dialog>
+</body>
+
+</html>
+
